@@ -2,13 +2,12 @@
 interface Props {
     title: string;
     date: string;
-    time: string;
     img1: string;
     img2: string;
     audioSrc: string;
 }
 
-const {title, date, time, img1, img2, audioSrc} = Astro.props;
+const {title, date, img1, img2, audioSrc} = Astro.props;
 
 ---
 
@@ -16,7 +15,6 @@ const {title, date, time, img1, img2, audioSrc} = Astro.props;
   <header class="post-header">
     <h3>{title}</h3>
     <span class="post-date">{date}</span>
-    <span class="post-date">{time}</span>
   </header>
 
   <!-- Сетка из двух изображений -->
