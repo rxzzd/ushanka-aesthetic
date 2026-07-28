@@ -1,11 +1,106 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import Post from '../components/Post.astro';
+
+const allPosts = await getCollection('posts');
+
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+
+// const posts = [
+//   {
+//     title: "j'entends ta voix - OTNO - Paris Danse",
+//     date: "July 27, 2026",
+//     img1: "https://picsum.photos/id/10/400/500", // Ссылки-заглушки для примера
+//     img2: "https://picsum.photos/id/11/400/500",
+//     audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+//   },
+//   {
+//     title: "haruki – romantic",
+//     date: "July 14, 2026",
+//     img1: "https://picsum.photos/id/22/400/500",
+//     img2: "https://picsum.photos/id/23/400/500",
+//     audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
+//   }
+// ];
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>j'entends ta voix</title>
+  </head>
+  <body>
+    <main class="container">
+      <header class="main-header">
+        <h1>j'entends ta voix</h1>
+        <p>атмосферные музыкальные подборки</p>
+      </header>
+
+      <section class="posts-list">
+        <!-- Мапим отсортированные посты -->
+        {sortedPosts.map((post) => (
+          <Post 
+            title={post.data.title} 
+            date={post.data.date.toLocaleDateString('ru-RU', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            })}
+			time={post.data.time}
+            img1={post.data.img1} 
+            img2={post.data.img2} 
+            audioSrc={post.data.audioSrc} 
+          />
+        ))}
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  /* Глобальный селектор :global(...) позволяет применить стили к тегу body за пределами компонента */
+  :global(body) {
+    background-color: #130f0d;
+    color: #e0e0e0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    max-width: 600px;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .main-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .main-header h1 {
+    font-size: 2rem;
+    margin: 0 0 8px 0;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .main-header p {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

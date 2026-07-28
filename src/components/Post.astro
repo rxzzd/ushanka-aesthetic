@@ -1,0 +1,95 @@
+---
+interface Props {
+    title: string;
+    date: string;
+    time: string;
+    img1: string;
+    img2: string;
+    audioSrc: string;
+}
+
+const {title, date, time, img1, img2, audioSrc} = Astro.props;
+
+---
+
+<article class="post-card">
+  <header class="post-header">
+    <h3>{title}</h3>
+    <span class="post-date">{date}</span>
+    <span class="post-date">{time}</span>
+  </header>
+
+  <!-- Сетка из двух изображений -->
+  <div class="image-grid">
+    <img src={img1} alt={`Иллюстрация 1 для ${title}`} loading="lazy" />
+    <img src={img2} alt={`Иллюстрация 2 для ${title}`} loading="lazy" />
+  </div>
+
+  <!-- Аудиоплеер -->
+  <div class="audio-container">
+    <audio controls src={audioSrc}></audio>
+  </div>
+</article>
+
+
+<style>
+  .post-card {
+    background-color: #301415;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .post-header h3 {
+    margin: 0;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .post-date {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  .image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Ровно 2 колонки */
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  /* Для мобильных экранов перестраиваем в одну колонку */
+  @media (max-width: 480px) {
+    .image-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .image-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Изображения аккуратно заполнят рамку без искажения пропорций */
+    border-radius: 8px;
+    background-color: #2a2a2a;
+  }
+
+  .audio-container {
+    width: 100%;
+  }
+
+  audio {
+    width: 100%;
+    border-radius: 8px;
+  }
+</style>
