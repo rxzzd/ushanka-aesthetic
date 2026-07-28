@@ -2,11 +2,11 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: import.meta.env.DEV
-    ? { kind: 'local' } // Локально пишем на диск (npm run dev)
-    : {
-        kind: 'github', // На Vercel отправляем коммиты напрямую в GitHub
-        repo: 'rxzzd/ushanka-aesthetic', // Название вашего репозитория из лога
-      },
+  ? { kind: 'local' }
+  : {
+      kind: 'github',
+      repo: 'rxzzd/ushanka-aesthetic',
+    },
   collections: {
     posts: collection({
       label: 'Музыкальные подборки',
