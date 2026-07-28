@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Post from '../components/Post.astro';
+import Analytics from '@vercel/analytics/astro';
 
 const allPosts = await getCollection('posts');
 
@@ -33,6 +34,7 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>j'entends ta voix</title>
+    <Analytics />
   </head>
   <body>
     <main class="container">
