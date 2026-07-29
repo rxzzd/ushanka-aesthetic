@@ -1,32 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Post from '../components/Post.astro';
-//import Analytics from '@vercel/analytics/astro';
 
 const allPosts = await getCollection('posts');
 
 const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-
-// const posts = [
-//   {
-//     title: "j'entends ta voix - OTNO - Paris Danse",
-//     date: "July 27, 2026",
-//     img1: "https://picsum.photos/id/10/400/500", // Ссылки-заглушки для примера
-//     img2: "https://picsum.photos/id/11/400/500",
-//     audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-//   },
-//   {
-//     title: "haruki – romantic",
-//     date: "July 14, 2026",
-//     img1: "https://picsum.photos/id/22/400/500",
-//     img2: "https://picsum.photos/id/23/400/500",
-//     audioSrc: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"
-//   }
-// ];
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <html lang="ru">
@@ -47,13 +26,8 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
         {sortedPosts.map((post) => (
           <Post 
             title={post.data.title} 
-            date={post.data.date.toLocaleDateString('ru-RU', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
-            })}
-            img1={post.data.img1} 
-            img2={post.data.img2} 
+            date={post.data.date}
+            images={post.data.imgs}
             audioSrc={post.data.audioSrc} 
           />
         ))}
@@ -63,7 +37,6 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
 </html>
 
 <style>
-  /* Глобальный селектор :global(...) позволяет применить стили к тегу body за пределами компонента */
   :global(body) {
     background-color: #130f0d;
     color: #e0e0e0;
@@ -104,3 +77,24 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     align-items: center;
   }
 </style>
+
+<script>
+  // Скрипт сработает в браузере посетителя
+  const dateElements = document.querySelectorAll('.post-date');
+  
+  dateElements.forEach((el) => {
+    const rawDate = el.getAttribute('data-date');
+    if (rawDate) {
+      const localDate = new Date(rawDate);
+      
+      // Автоматически форматирует под часовой пояс и язык ОС зрителя
+      el.textContent = localDate.toLocaleDateString(navigator.language, {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    }
+  });
+</script>

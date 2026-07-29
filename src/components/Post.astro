@@ -1,34 +1,74 @@
 ---
 interface Props {
-    title: string;
-    date: string;
-    img1: string;
-    img2: string;
-    audioSrc: string;
+  title: string;
+  date: Date;
+  images: string[] | undefined;
+  audioSrc?: string | null;
 }
 
-const {title, date, img1, img2, audioSrc} = Astro.props;
-
+const { title, date, images, audioSrc } = Astro.props;
 ---
 
 <article class="post-card">
   <header class="post-header">
     <h3>{title}</h3>
-    <span class="post-date">{date}</span>
+    <span class="post-date" data-date={date.toISOString()} />
   </header>
 
-  <!-- Сетка из двух изображений -->
   <div class="image-grid">
-    <img src={img1} alt={`Иллюстрация 1 для ${title}`} loading="lazy" />
-    <img src={img2} alt={`Иллюстрация 2 для ${title}`} loading="lazy" />
+    {
+      images?.map((image) => (
+        <img src={image} alt={`Иллюстрация 1 для ${title}`} loading="lazy" />
+      ))
+    }
   </div>
 
-  <!-- Аудиоплеер -->
   <div class="audio-container">
-    <audio controls src={audioSrc}></audio>
+    <audio class="audio-element" src={audioSrc}></audio>
+
+    {
+      audioSrc && (
+        <div class="custom-player">
+          <button class="play-btn" aria-label="Play/Pause">
+            <svg class="icon play-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+
+            <svg
+              class="icon pause-icon hidden"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+            </svg>
+          </button>
+
+          <span class="time-display time-current">0:00</span>
+
+          <input type="range" class="timeline" min="0" value="0" step="0.1" />
+          <span class="time-display time-duration">0:00</span>
+          <div class="volume-container">
+            <svg
+              class="icon volume-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+            </svg>
+            <input
+              type="range"
+              class="volume-slider"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.5"
+            />
+          </div>
+        </div>
+      )
+    }
   </div>
 </article>
-
 
 <style>
   .post-card {
@@ -38,7 +78,7 @@ const {title, date, img1, img2, audioSrc} = Astro.props;
     margin-bottom: 30px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     max-width: 600px;
-    width: 100%;
+    width: 80%;
   }
 
   .post-header {
@@ -62,22 +102,23 @@ const {title, date, img1, img2, audioSrc} = Astro.props;
 
   .image-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Ровно 2 колонки */
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     gap: 12px;
     margin-bottom: 16px;
   }
 
-  /* Для мобильных экранов перестраиваем в одну колонку */
   @media (max-width: 480px) {
-    .image-grid {
-      grid-template-columns: 1fr;
+    .post-card {
+      max-width: 90%;
+      width: 90%;
     }
   }
 
   .image-grid img {
     width: 100%;
     height: 250px;
-    object-fit: cover; /* Изображения аккуратно заполнят рамку без искажения пропорций */
+    object-fit: cover;
     border-radius: 8px;
     background-color: #2a2a2a;
   }
@@ -86,8 +127,363 @@ const {title, date, img1, img2, audioSrc} = Astro.props;
     width: 100%;
   }
 
-  audio {
+  /* Контейнер кастомного плеера */
+  .custom-player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
     width: 100%;
-    border-radius: 8px;
+    box-sizing: border-box;
+  }
+
+  /* Кнопка управления */
+  .play-btn {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    transition:
+      color 0.15s ease,
+      transform 0.1s ease;
+  }
+
+  .play-btn:hover {
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+
+  .play-btn:active {
+    transform: scale(0.95);
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* Текстовые индикаторы времени */
+  .time-display {
+    font-size: 0.8rem;
+    color: #a0a0a0;
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    min-width: 38px;
+    text-align: center;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  /* Ползунок перемотки */
+  .timeline {
+    flex-grow: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    margin: 0;
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .timeline:focus {
+    outline: none;
+  }
+
+  /* Стилизация дорожки (Track) */
+  .timeline::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.15);
+    height: 4px;
+    border-radius: 2px;
+    transition: background 0.15s ease;
+  }
+
+  .timeline:hover::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .timeline::-moz-range-track {
+    background: rgba(255, 255, 255, 0.15);
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  /* Стилизация бегунка (Thumb) */
+  .timeline::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -4px;
+    background-color: #e0e0e0;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    transition:
+      background-color 0.1s ease,
+      transform 0.1s ease;
+  }
+
+  .timeline::-webkit-slider-thumb:hover {
+    background-color: #ffffff;
+    transform: scale(1.2);
+  }
+
+  .timeline::-moz-range-thumb {
+    border: none;
+    background-color: #e0e0e0;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    transition:
+      background-color 0.1s ease,
+      transform 0.1s ease;
+  }
+
+  /* Контроллер громкости */
+  /* Контроллер громкости */
+  .volume-container {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+    flex-shrink: 0;
+  }
+
+  .volume-icon {
+    width: 18px;
+    height: 18px;
+    color: #a0a0a0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .volume-icon:hover {
+    color: #ffffff;
+  }
+
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 0px; /* Свернуто по умолчанию */
+    opacity: 0;
+    pointer-events: none;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    transition:
+      width 0.25s ease,
+      opacity 0.2s ease,
+      margin-left 0.25s ease;
+    margin-left: 0px;
+  }
+
+  /* Раскрываем ползунок при наведении (для ПК) или при активном классе .active (для мобильных) */
+  .volume-container:hover .volume-slider,
+  .volume-container.active .volume-slider {
+    width: 70px;
+    opacity: 1;
+    pointer-events: auto;
+    margin-left: 6px; /* Добавляем зазор только в раскрытом состоянии */
+  }
+
+  .volume-slider:focus {
+    outline: none;
+  }
+
+  .volume-slider::-webkit-slider-runnable-track {
+    background: rgba(255, 255, 255, 0.2);
+    height: 3px;
+    border-radius: 1.5px;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -3.5px;
+    background-color: #e0e0e0;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+  }
+
+  .volume-slider::-moz-range-track {
+    background: rgba(255, 255, 255, 0.2);
+    height: 3px;
+    border-radius: 1.5px;
+  }
+
+  .volume-slider::-moz-range-thumb {
+    border: none;
+    background-color: #e0e0e0;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
   }
 </style>
+
+<script>
+  function formatTime(seconds: number): string {
+    if (isNaN(seconds) || !isFinite(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins.toString().padStart(1, "0")}:${secs.toString().padStart(2, "0")}`;
+  }
+
+  const cards = document.querySelectorAll(".post-card");
+  const playedCards = new Set<Element>();
+
+  cards.forEach((card) => {
+    let isDragging = false;
+    let animationFrameId: number;
+
+    const audio = card.querySelector<HTMLAudioElement>(".audio-element");
+    const button = card.querySelector<HTMLButtonElement>(".play-btn");
+    const timeline = card.querySelector<HTMLInputElement>(".timeline");
+    const volumeSlider = card.querySelector<HTMLInputElement>(".volume-slider");
+
+    const timeCurrent = card.querySelector<HTMLSpanElement>(".time-current");
+    const timeDuration = card.querySelector<HTMLSpanElement>(".time-duration");
+    const volumeContainer =
+      card.querySelector<HTMLDivElement>(".volume-container");
+    const volumeIcon = card.querySelector<SVGElement>(".volume-icon");
+
+    const playIcon = button?.querySelector(".play-icon");
+    const pauseIcon = button?.querySelector(".pause-icon");
+
+    if (
+      audio &&
+      button &&
+      timeline &&
+      volumeSlider &&
+      volumeContainer &&
+      volumeIcon &&
+      timeCurrent &&
+      timeDuration &&
+      playIcon &&
+      pauseIcon
+    ) {
+      audio.volume = parseFloat(volumeSlider.value);
+
+      const updateButtonUI = () => {
+        if (audio.paused || audio.ended) {
+          playIcon.classList.remove("hidden");
+          pauseIcon.classList.add("hidden");
+        } else {
+          playIcon.classList.add("hidden");
+          pauseIcon.classList.remove("hidden");
+        }
+      };
+
+      const handleMetadata = () => {
+        timeline.max = audio.duration.toString();
+        timeDuration.textContent = formatTime(audio.duration);
+      };
+
+      audio.addEventListener("timeupdate", () => {
+        if (!isDragging) {
+          timeline.value = audio.currentTime.toString();
+          timeCurrent.textContent = formatTime(audio.currentTime);
+        }
+      });
+
+      audio.addEventListener("ended", () => {
+        updateButtonUI();
+        timeline.value = "0";
+        timeCurrent.textContent = "00:00";
+      });
+
+      audio.addEventListener("loadedmetadata", handleMetadata);
+
+      if (audio.readyState >= 1) {
+        handleMetadata();
+      }
+
+      timeline.addEventListener("input", () => {
+        timeCurrent.textContent = formatTime(Number(timeline.value));
+      });
+
+      volumeSlider.addEventListener("input", () => {
+        const volumeValue = parseFloat(volumeSlider.value);
+        audio.volume = volumeValue;
+
+        cards.forEach((otherCard) => {
+          if (otherCard !== card && !playedCards.has(otherCard)) {
+            const otherAudio =
+              otherCard.querySelector<HTMLAudioElement>(".audio-element");
+            const otherVolume =
+              otherCard.querySelector<HTMLInputElement>(".volume-slider");
+            if (otherAudio && otherVolume) {
+              otherAudio.volume = volumeValue;
+              otherVolume.value = volumeValue.toString();
+            }
+          }
+        });
+      });
+
+      volumeIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
+        volumeContainer.classList.toggle("active");
+      });
+
+      volumeSlider.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+
+      document.addEventListener("click", () => {
+        volumeContainer.classList.remove("active");
+      });
+
+      // for pc
+      timeline.addEventListener("mousedown", () => {
+        isDragging = true;
+      });
+
+      timeline.addEventListener("mouseup", () => {
+        if (isDragging) {
+          audio.currentTime = Number(timeline.value);
+          timeCurrent.textContent = formatTime(audio.currentTime); // Мгновенное обновление времени при отпускании
+          isDragging = false;
+        }
+      });
+
+      // for mobile
+      timeline.addEventListener("touchstart", () => {
+        isDragging = true;
+      });
+
+      timeline.addEventListener("touchend", () => {
+        if (isDragging) {
+          audio.currentTime = Number(timeline.value);
+          timeCurrent.textContent = formatTime(audio.currentTime); // Мгновенное обновление времени при отпускании
+          isDragging = false;
+        }
+      });
+
+      button.addEventListener("click", () => {
+        playedCards.add(card);
+
+        if (audio.paused || audio.ended) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+        updateButtonUI();
+      });
+    }
+  });
+</script>
