@@ -445,37 +445,48 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     border-radius: 50%;
   }
 
-  .lightbox-content {
-    position: relative;
-  }
 
-  .lightbox {
-    background: transparent;
-    border: none;
-    padding: 0;
-    outline: none;
-    overflow: visible;
 
-    opacity: 0;
-    transform: scale(0.95);
-
-    transition:
-      opacity 0.2s ease-out,
-      transform 0.2s ease-out,
-      display 0.2s allow-discrete;
-  }
+.lightbox {
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.25s ease-out, display 0.25s allow-discrete;
+}
 
   .lightbox[open] {
     opacity: 1;
-    transform: scale(1);
   }
 
   @starting-style {
     .lightbox[open] {
       opacity: 0;
-      transform: scale(0.95);
     }
   }
+
+  .lightbox-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Переносим анимацию масштаба сюда */
+  transform: scale(0.95);
+  transition: transform 0.25s ease-out;
+}
+
+.lightbox[open] .lightbox-content {
+  transform: scale(1);
+}
+
+@starting-style {
+  .lightbox[open] .lightbox-content {
+    transform: scale(0.95);
+  }
+}
 
   .lightbox::backdrop {
     background-color: rgba(0, 0, 0, 0);
@@ -499,23 +510,23 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
   }
 
   .close-lightbox-btn {
-    position: absolute;
-    top: -30px;
-    right: 0px;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.8rem;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    transition: opacity 0.15s ease;
-    opacity: 0.8;
-  }
+  position: absolute;
+  top: -30px; /* Смещаем вверх над картинкой */
+  right: 0px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: opacity 0.15s ease;
+  opacity: 0.8;
+}
 
-  .close-lightbox-btn:hover {
-    opacity: 1;
-  }
+.close-lightbox-btn:hover {
+  opacity: 1;
+}
 
   .lightbox-img {
     max-width: 90vw; /* Занимает максимум 90% ширины экрана */
