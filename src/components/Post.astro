@@ -102,12 +102,12 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
               </div>
             </div>
           </div>
-          <div class="lightbox-content">
-            <dialog class="lightbox">
+          <dialog class="lightbox">
+            <div class="lightbox-content">
               <button class="close-lightbox-btn">✕</button>
               <img class="lightbox-img" src="" alt="Enlarged view" />
-            </dialog>
-          </div>
+            </div>
+          </dialog>
         </div>
       )
     }
@@ -182,30 +182,28 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     width: 100%;
   }
 
-  /* Общий контейнер плеера (рамка, отступы) */
   .custom-player {
     display: flex;
     align-items: center;
-    gap: 16px; /* Зазор между левой колонкой (обложка) и правой */
+    gap: 16px;
     padding: 12px 18px;
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 20px; /* Сделали углы чуть более мягкими */
+    border-radius: 20px;
     width: 100%;
     box-sizing: border-box;
   }
 
-  /* Левая колонка (Круг) */
   .player-left {
     flex-shrink: 0;
   }
 
   .cover-wrapper {
     position: relative;
-    width: 44px; /* Размер круга */
+    width: 44px;
     height: 44px;
     border-radius: 50%;
-    overflow: hidden; /* Обрезает картинку и кнопку по форме круга */
+    overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
@@ -215,21 +213,19 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     object-fit: cover;
   }
 
-  /* Заглушка, если в файле нет встроенной картинки обложки */
   .player-cover-fallback {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, #512224, #1a0809);
   }
 
-  /* Кнопка накладывается абсолютно поверх обложки */
   .play-btn {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.45); /* Затемнение обложки */
+    background-color: rgba(0, 0, 0, 0.45);
     border: none;
     color: #ffffff;
     cursor: pointer;
@@ -241,16 +237,11 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
   }
 
   .play-btn:hover {
-    background-color: rgba(
-      0,
-      0,
-      0,
-      0.3
-    ); /* При наведении обложка становится чуть ярче */
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
   .play-btn:active .icon {
-    transform: scale(0.9); /* Легкий отклик при нажатии на саму иконку */
+    transform: scale(0.9);
   }
 
   .icon {
@@ -259,16 +250,14 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     transition: transform 0.1s ease;
   }
 
-  /* Правая колонка (Метаданные + Контроллеры) */
   .player-right {
     display: flex;
-    flex-direction: column; /* Элементы стоят друг под другом */
-    gap: 6px; /* Зазор между названием песни и ползунком */
+    flex-direction: column;
+    gap: 6px;
     flex-grow: 1;
-    min-width: 0; /* Важно для обрезания длинных названий */
+    min-width: 0;
   }
 
-  /* Текст метаданных (Название и автор) */
   .song-meta {
     font-size: 0.9rem;
     font-weight: 500;
@@ -276,7 +265,7 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     margin-left: 5px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Если название слишком длинное, оно красиво сократится точками */
+    text-overflow: ellipsis;
     user-select: none;
   }
 
@@ -293,7 +282,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     font-weight: 400;
   }
 
-  /* Строка с ползунком и временем */
   .player-controls {
     display: flex;
     align-items: center;
@@ -305,7 +293,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     display: none !important;
   }
 
-  /* Текстовые индикаторы времени */
   .time-display {
     font-size: 0.8rem;
     color: #a0a0a0;
@@ -317,7 +304,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     flex-shrink: 0;
   }
 
-  /* Ползунок перемотки */
   .timeline {
     flex-grow: 1;
     -webkit-appearance: none;
@@ -334,7 +320,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     outline: none;
   }
 
-  /* Стилизация дорожки (Track) */
   .timeline::-webkit-slider-runnable-track {
     background: rgba(255, 255, 255, 0.15);
     height: 4px;
@@ -352,7 +337,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     border-radius: 2px;
   }
 
-  /* Стилизация бегунка (Thumb) */
   .timeline::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -382,7 +366,6 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
       transform 0.1s ease;
   }
 
-  /* Контроллер громкости */
   .volume-container {
     display: flex;
     align-items: center;
@@ -420,13 +403,12 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
     margin-left: 0px;
   }
 
-  /* Раскрываем ползунок при наведении (для ПК) или при активном классе .active (для мобильных) */
   .volume-container:hover .volume-slider,
   .volume-container.active .volume-slider {
     width: 70px;
     opacity: 1;
     pointer-events: auto;
-    margin-left: 6px; /* Добавляем зазор только в раскрытом состоянии */
+    margin-left: 6px;
   }
 
   .volume-slider:focus {
@@ -588,7 +570,7 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
         img.addEventListener("click", () => {
           lightboxImg.src = img.src;
           lightbox.showModal();
-          document.body.style.overflow = 'hidden'; 
+          document.body.style.overflow = "hidden";
         });
       });
     }
@@ -779,10 +761,11 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
       //   }
       // });
 
-      // lightbox.addEventListener("close", () => {
-      //   lightboxImg.style.transform = "";
-      //   lightboxImg.style.transition = "";
-      // });
+      lightbox.addEventListener("close", () => {
+        lightboxImg.style.transform = "";
+        lightboxImg.style.transition = "";
+        document.body.style.overflow = "";
+      });
     }
   });
 </script>
