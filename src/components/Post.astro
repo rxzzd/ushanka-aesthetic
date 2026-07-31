@@ -588,6 +588,7 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
         img.addEventListener("click", () => {
           lightboxImg.src = img.src;
           lightbox.showModal();
+          document.body.style.overflow = 'hidden'; 
         });
       });
     }
