@@ -732,40 +732,56 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
         }
       });
 
-      lightboxImg.addEventListener("touchstart", (e) => {
-        touchStartY = e.touches[0].clientY;
-        touchDeltaY = 0;
-        isSwiping = true;
+      lightbox.addEventListener("click", (e) => {
+        // Получаем геометрические границы рамки диалога
+        const rect = lightbox.getBoundingClientRect();
 
-        lightboxImg.style.transition = "none";
-      });
+        // Проверяем, вышел ли клик за пределы этих границ
+        const clickedOutside =
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom;
 
-      lightboxImg.addEventListener("touchmove", (e) => {
-        if (!isSwiping) return;
-
-        const currentY = e.touches[0].clientY;
-        touchDeltaY = currentY - touchStartY;
-
-        lightboxImg.style.transform = `translateY(${touchDeltaY}px)`;
-      });
-
-      lightboxImg.addEventListener("touchend", () => {
-        if (!isSwiping) return;
-        isSwiping = false;
-
-        lightboxImg.style.transition = "transform 0.2s ease-out";
-
-        if (Math.abs(touchDeltaY) > 100) {
+        if (clickedOutside) {
           lightbox.close();
-        } else {
-          lightboxImg.style.transform = "translateY(0)";
         }
       });
 
-      lightbox.addEventListener("close", () => {
-        lightboxImg.style.transform = "";
-        lightboxImg.style.transition = "";
-      });
+      // lightboxImg.addEventListener("touchstart", (e) => {
+      //   touchStartY = e.touches[0].clientY;
+      //   touchDeltaY = 0;
+      //   isSwiping = true;
+
+      //   lightboxImg.style.transition = "none";
+      // });
+
+      // lightboxImg.addEventListener("touchmove", (e) => {
+      //   if (!isSwiping) return;
+
+      //   const currentY = e.touches[0].clientY;
+      //   touchDeltaY = currentY - touchStartY;
+
+      //   lightboxImg.style.transform = `translateY(${touchDeltaY}px)`;
+      // });
+
+      // lightboxImg.addEventListener("touchend", () => {
+      //   if (!isSwiping) return;
+      //   isSwiping = false;
+
+      //   lightboxImg.style.transition = "transform 0.2s ease-out";
+
+      //   if (Math.abs(touchDeltaY) > 100) {
+      //     lightbox.close();
+      //   } else {
+      //     lightboxImg.style.transform = "translateY(0)";
+      //   }
+      // });
+
+      // lightbox.addEventListener("close", () => {
+      //   lightboxImg.style.transform = "";
+      //   lightboxImg.style.transition = "";
+      // });
     }
   });
 </script>
