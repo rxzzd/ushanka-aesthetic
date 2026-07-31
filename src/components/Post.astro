@@ -4,15 +4,20 @@ interface Props {
   date: Date;
   images: string[] | undefined;
   audioSrc?: string | null;
+  metadata?: {
+    artist?: string;
+    title?: string;
+    cover?: string | null;
+  };
 }
 
-const { title, date, images, audioSrc } = Astro.props;
+const { title, date, images, audioSrc, metadata } = Astro.props;
 ---
 
 <article class="post-card">
   <header class="post-header">
     <h3>{title}</h3>
-    <span class="post-date" data-date={date.toISOString()} />
+    <span class="post-date" data-date={date.toISOString()}></span>
   </header>
 
   <div class="image-grid">
@@ -29,41 +34,80 @@ const { title, date, images, audioSrc } = Astro.props;
     {
       audioSrc && (
         <div class="custom-player">
-          <button class="play-btn" aria-label="Play/Pause">
-            <svg class="icon play-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
-            </svg>
+          <div class="player-left">
+            <div class="cover-wrapper">
+              {metadata?.cover ? (
+                <img src={metadata.cover} class="player-cover" alt="Cover" />
+              ) : (
+                <div class="player-cover-fallback" />
+              )}
 
-            <svg
-              class="icon pause-icon hidden"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-            </svg>
-          </button>
-
-          <span class="time-display time-current">0:00</span>
-
-          <input type="range" class="timeline" min="0" value="0" step="0.1" />
-          <span class="time-display time-duration">0:00</span>
-          <div class="volume-container">
-            <svg
-              class="icon volume-icon"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-            </svg>
-            <input
-              type="range"
-              class="volume-slider"
-              min="0"
-              max="1"
-              step="0.01"
-              value="0.5"
-            />
+              <button class="play-btn" aria-label="Play/Pause">
+                <svg
+                  class="icon play-icon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                <svg
+                  class="icon pause-icon hidden"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+                </svg>
+              </button>
+            </div>
           </div>
+
+          <div class="player-right">
+            <div class="song-meta">
+              <span class="song-artist">
+                {metadata?.artist || "Unknown Artist"}
+              </span>
+              <span class="song-separator"> — </span>
+              <span class="song-title">
+                {metadata?.title || "Unknown Track"}
+              </span>
+            </div>
+
+            <div class="player-controls">
+              <span class="time-display time-current">0:00</span>
+              <input
+                type="range"
+                class="timeline"
+                min="0"
+                value="0"
+                step="0.1"
+              />
+              <span class="time-display time-duration">0:00</span>
+
+              <div class="volume-container">
+                <svg
+                  class="icon volume-icon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                </svg>
+                <input
+                  type="range"
+                  class="volume-slider"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="0.3"
+                />
+              </div>
+            </div>
+          </div>
+          <dialog class="lightbox">
+            <div class="lightbox-content">
+              <button class="close-lightbox-btn">✕</button>
+              <img class="lightbox-img" src="" alt="Enlarged view" />
+            </div>
+          </dialog>
         </div>
       )
     }
@@ -108,10 +152,21 @@ const { title, date, images, audioSrc } = Astro.props;
     margin-bottom: 16px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 550px) {
     .post-card {
       max-width: 90%;
       width: 90%;
+    }
+
+    .volume-container {
+      position: relative;
+    }
+
+    .volume-slider {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translate(-58%, -113%) rotate(-90deg);
     }
   }
 
@@ -127,56 +182,117 @@ const { title, date, images, audioSrc } = Astro.props;
     width: 100%;
   }
 
-  /* Контейнер кастомного плеера */
   .custom-player {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
+    gap: 16px;
+    padding: 12px 18px;
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 30px;
+    border-radius: 20px;
     width: 100%;
     box-sizing: border-box;
   }
 
-  /* Кнопка управления */
+  .player-left {
+    flex-shrink: 0;
+  }
+
+  .cover-wrapper {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .player-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .player-cover-fallback {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #512224, #1a0809);
+  }
+
   .play-btn {
-    background: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
     border: none;
-    color: #e0e0e0;
+    color: #ffffff;
     cursor: pointer;
-    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    flex-shrink: 0;
-    transition:
-      color 0.15s ease,
-      transform 0.1s ease;
+    padding: 0;
+    transition: background-color 0.2s ease;
   }
 
   .play-btn:hover {
-    color: #ffffff;
-    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.3);
   }
 
-  .play-btn:active {
-    transform: scale(0.95);
+  .play-btn:active .icon {
+    transform: scale(0.9);
   }
 
   .icon {
-    width: 24px;
+    width: 20px;
     height: 24px;
+    transition: transform 0.1s ease;
+  }
+
+  .player-right {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  .song-meta {
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left;
+    margin-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+
+  .song-artist {
+    color: #ffffff;
+  }
+
+  .song-separator {
+    color: #888888;
+  }
+
+  .song-title {
+    color: #e0e0e0;
+    font-weight: 400;
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
   }
 
   .hidden {
     display: none !important;
   }
 
-  /* Текстовые индикаторы времени */
   .time-display {
     font-size: 0.8rem;
     color: #a0a0a0;
@@ -188,7 +304,6 @@ const { title, date, images, audioSrc } = Astro.props;
     flex-shrink: 0;
   }
 
-  /* Ползунок перемотки */
   .timeline {
     flex-grow: 1;
     -webkit-appearance: none;
@@ -205,7 +320,6 @@ const { title, date, images, audioSrc } = Astro.props;
     outline: none;
   }
 
-  /* Стилизация дорожки (Track) */
   .timeline::-webkit-slider-runnable-track {
     background: rgba(255, 255, 255, 0.15);
     height: 4px;
@@ -223,7 +337,6 @@ const { title, date, images, audioSrc } = Astro.props;
     border-radius: 2px;
   }
 
-  /* Стилизация бегунка (Thumb) */
   .timeline::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -253,8 +366,6 @@ const { title, date, images, audioSrc } = Astro.props;
       transform 0.1s ease;
   }
 
-  /* Контроллер громкости */
-  /* Контроллер громкости */
   .volume-container {
     display: flex;
     align-items: center;
@@ -279,7 +390,7 @@ const { title, date, images, audioSrc } = Astro.props;
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: 0px; /* Свернуто по умолчанию */
+    width: 0px;
     opacity: 0;
     pointer-events: none;
     height: 20px;
@@ -292,13 +403,12 @@ const { title, date, images, audioSrc } = Astro.props;
     margin-left: 0px;
   }
 
-  /* Раскрываем ползунок при наведении (для ПК) или при активном классе .active (для мобильных) */
   .volume-container:hover .volume-slider,
   .volume-container.active .volume-slider {
     width: 70px;
     opacity: 1;
     pointer-events: auto;
-    margin-left: 6px; /* Добавляем зазор только в раскрытом состоянии */
+    margin-left: 6px;
   }
 
   .volume-slider:focus {
@@ -334,6 +444,98 @@ const { title, date, images, audioSrc } = Astro.props;
     width: 10px;
     border-radius: 50%;
   }
+
+
+
+.lightbox {
+  background: transparent;
+  border: none;
+  padding: 0;
+  outline: none;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 0.25s ease-out, display 0.25s allow-discrete;
+}
+
+  .lightbox[open] {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .lightbox[open] {
+      opacity: 0;
+    }
+  }
+
+  .lightbox-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Переносим анимацию масштаба сюда */
+  transform: scale(0.95);
+  transition: transform 0.25s ease-out;
+}
+
+.lightbox[open] .lightbox-content {
+  transform: scale(1);
+}
+
+@starting-style {
+  .lightbox[open] .lightbox-content {
+    transform: scale(0.95);
+  }
+}
+
+  .lightbox::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition:
+      background-color 0.2s ease-out,
+      backdrop-filter 0.2s ease-out,
+      display 0.2s allow-discrete;
+  }
+
+  .lightbox[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+  }
+
+  @starting-style {
+    .lightbox[open]::backdrop {
+      background-color: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+    }
+  }
+
+  .close-lightbox-btn {
+  position: absolute;
+  top: -30px; /* Смещаем вверх над картинкой */
+  right: 0px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: opacity 0.15s ease;
+  opacity: 0.8;
+}
+
+.close-lightbox-btn:hover {
+  opacity: 1;
+}
+
+  .lightbox-img {
+    max-width: 90vw; /* Занимает максимум 90% ширины экрана */
+    max-height: 85vh; /* Занимает максимум 85% высоты экрана */
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  }
 </style>
 
 <script>
@@ -349,7 +551,10 @@ const { title, date, images, audioSrc } = Astro.props;
 
   cards.forEach((card) => {
     let isDragging = false;
-    let animationFrameId: number;
+
+    let touchStartY = 0;
+    let touchDeltaY = 0;
+    let isSwiping = false;
 
     const audio = card.querySelector<HTMLAudioElement>(".audio-element");
     const button = card.querySelector<HTMLButtonElement>(".play-btn");
@@ -365,6 +570,26 @@ const { title, date, images, audioSrc } = Astro.props;
     const playIcon = button?.querySelector(".play-icon");
     const pauseIcon = button?.querySelector(".pause-icon");
 
+    const lightbox = card.querySelector<HTMLDialogElement>(".lightbox");
+    const lightboxImg = card.querySelector<HTMLImageElement>(".lightbox-img");
+    const closeLightboxButton = card.querySelector<HTMLButtonElement>(
+      ".close-lightbox-btn",
+    );
+    const images = card.querySelectorAll<HTMLImageElement>(".image-grid img");
+    if (lightboxImg && lightbox) {
+      images.forEach((img) => {
+        img.addEventListener("click", () => {
+          lightboxImg.src = img.src;
+          lightbox.showModal();
+          document.body.style.overflow = "hidden";
+        });
+      });
+    }
+
+    closeLightboxButton?.addEventListener("click", () => {
+      lightbox?.close();
+    });
+
     if (
       audio &&
       button &&
@@ -375,7 +600,9 @@ const { title, date, images, audioSrc } = Astro.props;
       timeCurrent &&
       timeDuration &&
       playIcon &&
-      pauseIcon
+      pauseIcon &&
+      lightboxImg &&
+      lightbox
     ) {
       audio.volume = parseFloat(volumeSlider.value);
 
@@ -456,7 +683,7 @@ const { title, date, images, audioSrc } = Astro.props;
       timeline.addEventListener("mouseup", () => {
         if (isDragging) {
           audio.currentTime = Number(timeline.value);
-          timeCurrent.textContent = formatTime(audio.currentTime); // Мгновенное обновление времени при отпускании
+          timeCurrent.textContent = formatTime(audio.currentTime);
           isDragging = false;
         }
       });
@@ -469,9 +696,24 @@ const { title, date, images, audioSrc } = Astro.props;
       timeline.addEventListener("touchend", () => {
         if (isDragging) {
           audio.currentTime = Number(timeline.value);
-          timeCurrent.textContent = formatTime(audio.currentTime); // Мгновенное обновление времени при отпускании
+          timeCurrent.textContent = formatTime(audio.currentTime);
           isDragging = false;
         }
+      });
+
+      audio.addEventListener("play", () => {
+        const allAudios =
+          document.querySelectorAll<HTMLAudioElement>(".audio-element");
+        allAudios.forEach((otherAudio) => {
+          if (otherAudio != audio) {
+            otherAudio.pause();
+          }
+        });
+        updateButtonUI();
+      });
+
+      audio.addEventListener("pause", () => {
+        updateButtonUI();
       });
 
       button.addEventListener("click", () => {
@@ -482,7 +724,58 @@ const { title, date, images, audioSrc } = Astro.props;
         } else {
           audio.pause();
         }
-        updateButtonUI();
+      });
+
+      lightbox.addEventListener("click", (e) => {
+        // Получаем геометрические границы рамки диалога
+        const rect = lightbox.getBoundingClientRect();
+
+        // Проверяем, вышел ли клик за пределы этих границ
+        const clickedOutside =
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom;
+
+        if (clickedOutside) {
+          lightbox.close();
+        }
+      });
+
+      // lightboxImg.addEventListener("touchstart", (e) => {
+      //   touchStartY = e.touches[0].clientY;
+      //   touchDeltaY = 0;
+      //   isSwiping = true;
+
+      //   lightboxImg.style.transition = "none";
+      // });
+
+      // lightboxImg.addEventListener("touchmove", (e) => {
+      //   if (!isSwiping) return;
+
+      //   const currentY = e.touches[0].clientY;
+      //   touchDeltaY = currentY - touchStartY;
+
+      //   lightboxImg.style.transform = `translateY(${touchDeltaY}px)`;
+      // });
+
+      // lightboxImg.addEventListener("touchend", () => {
+      //   if (!isSwiping) return;
+      //   isSwiping = false;
+
+      //   lightboxImg.style.transition = "transform 0.2s ease-out";
+
+      //   if (Math.abs(touchDeltaY) > 100) {
+      //     lightbox.close();
+      //   } else {
+      //     lightboxImg.style.transform = "translateY(0)";
+      //   }
+      // });
+
+      lightbox.addEventListener("close", () => {
+        lightboxImg.style.transform = "";
+        lightboxImg.style.transition = "";
+        document.body.style.overflow = "";
       });
     }
   });

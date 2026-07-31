@@ -29,6 +29,7 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
             date={post.data.date}
             images={post.data.imgs}
             audioSrc={post.data.audioSrc} 
+            metadata={post.data.metadata}
           />
         ))}
       </section>
