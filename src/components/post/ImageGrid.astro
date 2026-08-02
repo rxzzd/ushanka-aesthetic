@@ -1,0 +1,234 @@
+---
+interface Props {
+  title: string;
+  images: string[] | undefined;
+}
+
+const { images, title } = Astro.props;
+---
+
+<div class="image-grid">
+  {
+    images?.map((image) => (
+      <img src={image} alt={`Иллюстрация 1 для ${title}`} loading="lazy" />
+    ))
+  }
+  <dialog class="lightbox">
+    <div class="lightbox-content">
+      <button class="close-lightbox-btn">✕</button>
+      <img class="lightbox-img" src="" alt="Enlarged view" />
+    </div>
+  </dialog>
+</div>
+
+<style>
+  .image-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .image-grid > img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+  }
+
+  .lightbox {
+    background: transparent;
+    border: none;
+    padding: 0;
+    outline: none;
+    overflow: visible;
+    opacity: 0;
+    transition:
+      opacity 0.25s ease-out,
+      display 0.25s allow-discrete;
+  }
+
+  .lightbox-img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 8px;
+    display: block;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  .lightbox[open] {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .lightbox[open] {
+      opacity: 0;
+    }
+  }
+
+  .lightbox-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Переносим анимацию масштаба сюда */
+    transform: scale(0.95);
+    transition: transform 0.25s ease-out;
+  }
+
+  .lightbox[open] .lightbox-content {
+    transform: scale(1);
+  }
+
+  @starting-style {
+    .lightbox[open] .lightbox-content {
+      transform: scale(0.95);
+    }
+  }
+
+  .lightbox::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition:
+      background-color 0.2s ease-out,
+      backdrop-filter 0.2s ease-out,
+      display 0.2s allow-discrete;
+  }
+
+  .lightbox[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+  }
+
+  @starting-style {
+    .lightbox[open]::backdrop {
+      background-color: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+    }
+  }
+
+  .close-lightbox-btn {
+    position: absolute;
+    top: -30px; /* Смещаем вверх над картинкой */
+    right: 0px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: opacity 0.15s ease;
+    opacity: 0.8;
+  }
+
+  .close-lightbox-btn:hover {
+    opacity: 1;
+  }
+
+
+
+  @media (max-width: 550px) {
+    .image-grid img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    background-color: #2a2a2a;
+  }
+  }
+</style>
+
+<script>
+  const images_grid = document.querySelectorAll<HTMLImageElement>(".image-grid");
+
+  images_grid.forEach((image_grid) => {
+    let touchStartY = 0;
+    let touchDeltaY = 0;
+    let isSwiping = false;
+
+    const lightbox = image_grid.querySelector<HTMLDialogElement>(".lightbox");
+    const lightboxImg = image_grid.querySelector<HTMLImageElement>(".lightbox-img");
+    const closeLightboxButton = image_grid.querySelector<HTMLButtonElement>(
+      ".close-lightbox-btn",
+    );
+
+    const images = image_grid.querySelectorAll<HTMLImageElement>(".image-grid > img");
+
+    if (lightboxImg && lightbox) {
+      images.forEach((img) => {
+        img.addEventListener("click", () => {
+          lightboxImg.src = img.src;
+          lightbox.showModal();
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+    closeLightboxButton?.addEventListener("click", () => {
+      lightbox?.close();
+    });
+
+    if (
+      lightboxImg &&
+      lightbox
+    ) {
+   
+
+      lightbox.addEventListener("click", (e) => {
+        const rect = lightbox.getBoundingClientRect();
+
+        const clickedOutside =
+          e.clientX < rect.left ||
+          e.clientX > rect.right ||
+          e.clientY < rect.top ||
+          e.clientY > rect.bottom;
+          
+
+        if (clickedOutside) {
+          lightbox.close();
+        }
+        
+
+lightbox.addEventListener("close", () => {
+        lightboxImg.style.transform = "";
+        lightboxImg.style.transition = "";
+        document.body.style.overflow = "";
+      });
+    })
+
+    // lightboxImg.addEventListener("touchstart", (e) => {
+      //   touchStartY = e.touches[0].clientY;
+      //   touchDeltaY = 0;
+      //   isSwiping = true;
+
+      //   lightboxImg.style.transition = "none";
+      // });
+
+      // lightboxImg.addEventListener("touchmove", (e) => {
+      //   if (!isSwiping) return;
+
+      //   const currentY = e.touches[0].clientY;
+      //   touchDeltaY = currentY - touchStartY;
+
+      //   lightboxImg.style.transform = `translateY(${touchDeltaY}px)`;
+      // });
+
+      // lightboxImg.addEventListener("touchend", () => {
+      //   if (!isSwiping) return;
+      //   isSwiping = false;
+
+      //   lightboxImg.style.transition = "transform 0.2s ease-out";
+
+      //   if (Math.abs(touchDeltaY) > 100) {
+      //     lightbox.close();
+      //   } else {
+      //     lightboxImg.style.transform = "translateY(0)";
+      //   }
+      // });
+  }
+}})
+</script>

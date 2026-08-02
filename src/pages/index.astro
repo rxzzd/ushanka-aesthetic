@@ -1,11 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
-import Post from '../components/Post.astro';
+import { getCollection } from "astro:content";
+import Post from "../components/post/Post.astro";
 
-const allPosts = await getCollection('posts');
+const allPosts = await getCollection("posts");
 
-const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
 <html lang="ru">
@@ -18,20 +19,21 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     <main class="container">
       <header class="main-header">
         <h1>j'entends ta voix</h1>
-        <p>атмосферные музыкальные подборки</p>
+        <p>˙⋆✮୨ৎ✮⋆˙</p>
       </header>
 
       <section class="posts-list">
-        <!-- Мапим отсортированные посты -->
-        {sortedPosts.map((post) => (
-          <Post 
-            title={post.data.title} 
-            date={post.data.date}
-            images={post.data.imgs}
-            audioSrc={post.data.audioSrc} 
-            metadata={post.data.metadata}
-          />
-        ))}
+        {
+          sortedPosts.map((post) => (
+            <Post
+              title={post.data.title}
+              date={post.data.date}
+              images={post.data.imgs}
+              audioSrc={post.data.audioSrc}
+              metadata={post.data.metadata}
+            />
+          ))
+        }
       </section>
     </main>
   </body>
@@ -41,7 +43,13 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
   :global(body) {
     background-color: #130f0d;
     color: #e0e0e0;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -77,24 +85,26 @@ const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.
     flex-direction: column;
     align-items: center;
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 </style>
 
 <script>
-  // Скрипт сработает в браузере посетителя
-  const dateElements = document.querySelectorAll('.post-date');
-  
+  const dateElements = document.querySelectorAll(".post-date");
+
   dateElements.forEach((el) => {
-    const rawDate = el.getAttribute('data-date');
+    const rawDate = el.getAttribute("data-date");
     if (rawDate) {
       const localDate = new Date(rawDate);
-      
-      // Автоматически форматирует под часовой пояс и язык ОС зрителя
+
       el.textContent = localDate.toLocaleDateString(navigator.language, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       });
     }
   });

@@ -1,0 +1,41 @@
+---
+interface Props {
+  title: string;
+  date: Date;
+}
+
+const { title, date } = Astro.props;
+---
+
+<header class="post-header">
+  <h3>{title}</h3>
+  <span class="post-date" data-date={date.toISOString()}></span>
+</header>
+
+<style>
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .post-header h3 {
+    margin: 0;
+    color: #e0e0e0;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .post-date {
+    color: #888;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 550px) {
+    .post-card {
+      max-width: 90%;
+      width: 90%;
+    }
+  }
+</style>
