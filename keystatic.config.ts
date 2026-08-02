@@ -13,7 +13,7 @@ export default config({
       slugField: "title",
       path: "src/content/posts/*",
       format: { data: "yaml" },
-      columns: ['date'],
+      columns: ['title', 'date'],
       schema: {
         title: fields.slug({ name: { label: "Заголовок" } }),
         date: fields.datetime({
