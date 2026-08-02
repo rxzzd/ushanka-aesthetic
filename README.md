@@ -1,46 +1,41 @@
-# Astro Starter Kit: Basics
+<h1 align="center">꧁⎝ 𓆩༺ 𝔧'𝔢𝔫𝔱𝔢𝔫𝔡𝔰 𝔱𝔞 𝔳𝔬𝔦𝔵 ༻𓆪 ⎠꧂</h1><p align="center">
+  <p align="center">
+  ˚₊‧꒰ა ࣪ ˖ ♱ ࣪ ˖ 𓆩 ♱ 𓆪 ࣪ ˖ ♱ ࣪ ˖ ໒꒱ ‧₊˚
+</p>
+<p align="center">
+  𝘈𝘯 𝘢𝘯𝘨𝘦𝘭 𝘸𝘪𝘵𝘩 𝘰𝘣𝘴𝘪𝘥𝘪𝘢𝘯 𝘸𝘪𝘯𝘨𝘴, 𝘣𝘦𝘸𝘪𝘭𝘥𝘦𝘳𝘦𝘥 𝘣𝘺 𝘵𝘩𝘦 𝘊𝘰𝘷𝘦𝘯'𝘴 𝘥𝘦𝘤𝘪𝘴𝘪𝘰𝘯𝘴
+</p>
+<p align="center">
+  ✦•┈๑⋅⋯ 𓆩༺ ♱ ༻𓆪 ⋯⋅๑┈•✦
+</p>
 
-```sh
-npm create astro@latest -- --template basics
-```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+<p align="center">───────────────────────────────── ୨ৎ ─────────────────────────────────</p>
 
-## 🚀 Project Structure
+<h3 align="center">𝕷𝖆𝖈𝖊𝖉 𝖎𝖓 𝖘𝖎𝖑𝖛𝖊𝖗 𝖙𝖍𝖔𝖗𝖓𝖘, 𝖌𝖚𝖎𝖉𝖊𝖉 𝖇𝖞 𝖙𝖍𝖊 𝖜𝖍𝖎𝖘𝖕𝖊𝖗𝖘 𝖔𝖋 𝖆 𝖋𝖔𝖗𝖌𝖔𝖙𝖙𝖊𝖓 𝖛𝖔𝖎𝖈𝖊</h3>
+<h3 align="center">𝖂𝖊 𝖆𝖗𝖊 𝖏𝖚𝖘𝖙 𝖘𝖍𝖆𝖉𝖔𝖜𝖘 𝖕𝖑𝖆𝖞𝖎𝖓𝖌 𝖎𝖓 𝖆 𝖗𝖚𝖎𝖓𝖊𝖉 𝖈𝖆𝖙𝖍𝖊𝖉𝖗𝖆𝖑, 𝖜𝖆𝖎𝖙𝖎𝖓𝖌 𝖋𝖔𝖗 𝖙𝖍𝖊 𝖈𝖆𝖓𝖉𝖑𝖊𝖘 𝖙𝖔 𝖇𝖚𝖗𝖓 𝖔𝖚𝖙</h3>
+<h3 align="center">𝕬 𝖇𝖑𝖆𝖈𝖐 𝖛𝖊𝖑𝖛𝖊𝖙 𝖗𝖎𝖇𝖇𝖔𝖓 𝖙𝖎𝖊𝖉 𝖆𝖗𝖔𝖚𝖓𝖉 𝖆 𝖗𝖚𝖘𝖙𝖊𝖉 𝖈𝖗𝖔𝖜𝖓</h3>
 
-Inside of your Astro project, you'll see the following folders and files:
+<p align="center">───────────────────────────────── ୨ৎ ─────────────────────────────────</p>
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+<h2 align="center">꒰ა 𝓉𝒽𝑒_𝓈𝒶𝒸𝓇𝑒𝒹_𝒻𝓇𝒶𝑔𝓂𝑒𝓃𝓉𝓈 ໒꒱</h2>
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+<p align="left">𝜗𝜚 𝙸 𝚌𝚊𝚛𝚟𝚎𝚍 𝚢𝚘𝚞𝚛 𝚗𝚊𝚖𝚎 𝚘𝚗 𝚝𝚑𝚎 𝚋𝚊𝚛𝚔 𝚘𝚏 𝚊 𝚍𝚢𝚒𝚗𝚐 𝚝𝚛𝚎𝚎, 𝚊𝚗𝚍 𝚝𝚑𝚎 𝚠𝚒𝚗𝚍 𝚌𝚊𝚛𝚛𝚒𝚎𝚍 𝚒𝚝 𝚊𝚠𝚊𝚢. 𝜗𝜚</p>
+<p align="center">✮ 𝚂𝚝𝚊𝚛𝚒𝚗𝚐 𝚒𝚗𝚝𝚘 𝚝𝚑𝚎 𝚍𝚊𝚛𝚔 𝚞𝚗𝚝𝚒𝚕 𝚝𝚑𝚎 𝚍𝚊𝚛𝚔 𝚋𝚎𝚐𝚒𝚗𝚜 𝚝𝚘 𝚜𝚝𝚊𝚛𝚎 𝚋𝚊𝚌𝚔. ✮</p>
+<p align="right">♰ 𝚃𝚒𝚎𝚍 𝚝𝚘 𝚝𝚑𝚎 𝚎𝚊𝚛𝚝𝚑 𝚋𝚢 𝚌𝚛𝚒𝚖𝚜𝚘𝚗 𝚝𝚑𝚛𝚎𝚊𝚍𝚜, 𝚙𝚞𝚕𝚕𝚎𝚍 𝚝𝚘 𝚝𝚑𝚎 𝚟𝚘𝚒𝚍 𝚋𝚢 𝚢𝚘𝚞𝚛 𝚟𝚘𝚒𝚌𝚎. ♰</p>
 
-## 🧞 Commands
+<h1 align="center">𓆩༺ 𝖗 𝖎 𝖙 𝖚 𝖆 𝖑 𓆪</h1>
 
-All commands are run from the root of the project, from a terminal:
+<p align="center">
+  <code>&gt;&gt; a༙྇c༙྇t༙྇i༙྇v༙྇e༙྇_s༙྇p༙྇e༙྇l༙྇l༙྇: l༙྇o༙྇o༙྇p༙྇i༙྇n༙྇g༙྇_f༙྇o༙྇r༙྇e༙྇v༙྇e༙྇r༙྇</code><br />
+  <code>&gt;&gt; b༙྇a༙྇c༙྇k༙྇d༙྇r༙྇o༙྇p༙྇_f༙྇i༙྇l༙྇t༙྇e༙྇r༙྇: m༙྇i༙྇s༙྇t༙྇_a༙྇c༙྇t༙྇i༙྇v༙྇e༙྇</code><br />
+  <code>&gt;&gt; s༙྇i༙྇g༙྇n༙྇a༙྇l༙྇_s༙྇t༙྇r༙྇e༙྇n༙྇g༙྇t༙྇h༙྇: f༙྇a༙྇d༙྇i༙྇n༙྇g༙྇_a༙྇w༙྇a༙྇y༙྇</code>
+</p>
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+<p align="center">
+  ✦•┈๑⋅⋯ 𓆩༺ ཐི⋆♱⋆ཋྀ ༻𓆪 ⋯⋅๑┈•✦
+</p>
+<h1></h1>
+<p align="center">
+  <i>𝑡ℎ𝑒 𝑏𝑙𝑜𝑜𝑑 𝑖𝑠 𝑐𝑜𝑙𝑑, 𝑏𝑢𝑡 𝑡ℎ𝑒 𝑑𝑒𝑣𝑜𝑡𝑖𝑜𝑛 𝑟𝑒𝑚𝑎𝑖𝑛𝑠.</i>
+</p>
