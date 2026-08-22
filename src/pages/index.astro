@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Post from "../components/post/Post.astro";
 import "../styles/global.css";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 const allPosts = await getCollection("posts");
 
@@ -20,7 +21,6 @@ const sortedPosts = allPosts.sort(
   <body>
     <ThemeSwitcher />
 
-    <div class="theme-switcher-container" />
     <main class="container">
       <header class="main-header">
         <h1>j'entends ta voix</h1>
@@ -41,6 +41,7 @@ const sortedPosts = allPosts.sort(
         }
       </section>
     </main>
+    <SpeedInsights />
   </body>
 </html>
 
@@ -103,3 +104,4 @@ const sortedPosts = allPosts.sort(
     }
   });
 </script>
+
