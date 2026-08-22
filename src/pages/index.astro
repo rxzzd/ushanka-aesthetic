@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import Post from "../components/post/Post.astro";
+import "../styles/global.css";
+import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 
 const allPosts = await getCollection("posts");
 
@@ -16,6 +18,9 @@ const sortedPosts = allPosts.sort(
     <title>j'entends ta voix</title>
   </head>
   <body>
+    <ThemeSwitcher />
+
+    <div class="theme-switcher-container" />
     <main class="container">
       <header class="main-header">
         <h1>j'entends ta voix</h1>
@@ -41,15 +46,6 @@ const sortedPosts = allPosts.sort(
 
 <style>
   :global(body) {
-    background-color: #130f0d;
-    color: #e0e0e0;
-    font-family:
-      system-ui,
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
@@ -91,14 +87,12 @@ const sortedPosts = allPosts.sort(
   }
 </style>
 
-<script>
+<script is:inline>
   const dateElements = document.querySelectorAll(".post-date");
-
   dateElements.forEach((el) => {
     const rawDate = el.getAttribute("data-date");
     if (rawDate) {
       const localDate = new Date(rawDate);
-
       el.textContent = localDate.toLocaleDateString(navigator.language, {
         day: "numeric",
         month: "long",
