@@ -1,0 +1,182 @@
+---
+
+---
+
+<div class="theme-switcher-container">
+  <span class="switcher-icon" aria-hidden="true">✦</span>
+
+  <div class="swatches-row">
+    <!-- Default -->
+    <button
+      class="theme-btn active"
+      data-theme-target="default"
+      style="--swatch-color: #301415;"
+      title="Vampire Goth (Default)"></button>
+
+    <!-- Velvet Blood -->
+    <button
+      class="theme-btn"
+      data-theme-target="velvet-blood"
+      style="--swatch-color: #49111c;"
+      title="Velvet Blood"></button>
+
+    <!-- Sakura Goth -->
+    <button
+      class="theme-btn"
+      data-theme-target="sakura-goth"
+      style="--swatch-color: #4a3f4b;"
+      title="Sakura Goth"></button>
+
+    <!-- Kombu Forest -->
+    <button
+      class="theme-btn"
+      data-theme-target="kombu-forest"
+      style="--swatch-color: #3a4032;"
+      title="Kombu Forest"></button>
+
+    <!-- Deep Occult -->
+    <button
+      class="theme-btn"
+      data-theme-target="deep-occult"
+      style="--swatch-color: #1e202c;"
+      title="Deep Occult"></button>
+  </div>
+</div>
+
+<style>
+  .theme-switcher-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 6px 14px;
+    background-color: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: border-color 0.3s ease;
+    user-select: none;
+  }
+
+  .theme-switcher-container:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .switcher-icon {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    transition: color 0.4s ease;
+    display: inline-block;
+    line-height: 1;
+  }
+
+  .swatches-row {
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 4px 0;
+    transition:
+      width 0.25s ease-out,
+      opacity 0.04s ease-out,
+      margin-left 0.25s ease-out,
+      padding 0.25s ease-out;
+  }
+
+  .theme-switcher-container.expanded .swatches-row {
+    width: 100px;
+    opacity: 1;
+    margin-left: 10px;
+    padding: 4px 6px;
+  }
+
+  .theme-btn {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--swatch-color);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    box-sizing: border-box;
+    transition:
+      transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      border-color 0.2s ease;
+  }
+
+  .theme-btn:hover {
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .theme-btn.active {
+    transform: scale(1.1);
+    border-color: #ffffff;
+    box-shadow:
+      0 0 0 2px var(--bg-color),
+      0 0 0 3px var(--accent-color);
+  }
+
+  @media (max-width: 550px) {
+    .theme-switcher-container {
+      top: auto;
+      bottom: 24px;
+      right: 50%;
+      transform: translateX(50%);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+  }
+</style>
+
+<script>
+  const savedTheme = localStorage.getItem("theme") || "default";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  const container = document.querySelector(".theme-switcher-container");
+  const icon = document.querySelector(".switcher-icon");
+  const buttons = document.querySelectorAll(".theme-btn");
+  const activeButton = document.querySelector(
+    `[data-theme-target="${savedTheme}"]`,
+  );
+
+  if (container && icon && buttons.length > 0) {
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const theme = btn.getAttribute("data-theme-target");
+
+        if (theme) {
+          document.documentElement.setAttribute("data-theme", theme);
+          localStorage.setItem("theme", theme);
+          buttons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+        }
+      });
+    });
+
+    container.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      if (e.target instanceof HTMLElement && !e.target.closest(".theme-btn")) {
+        container.classList.toggle("expanded");
+      }
+    });
+
+    if (activeButton) {
+      buttons.forEach((b) => b.classList.remove("active"));
+      activeButton.classList.add("active");
+    }
+
+    document.addEventListener("click", () => {
+      container.classList.remove("expanded");
+    });
+  }
+</script>

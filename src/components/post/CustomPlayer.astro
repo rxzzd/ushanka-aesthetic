@@ -1,6 +1,4 @@
 ---
-// import type { Props as PostProps } from "./Post.astro";
-
 interface Props {
   audioSrc?: string | null;
   metadata?: {
@@ -247,7 +245,7 @@ const { audioSrc, metadata } = Astro.props;
     -webkit-appearance: none;
     appearance: none;
     margin-top: -4px;
-    background-color: #e0e0e0;
+    background-color: var(--accent-color);
     height: 12px;
     width: 12px;
     border-radius: 50%;
@@ -263,7 +261,7 @@ const { audioSrc, metadata } = Astro.props;
 
   .timeline::-moz-range-thumb {
     border: none;
-    background-color: #e0e0e0;
+    background-color: var(--accent-color);
     height: 12px;
     width: 12px;
     border-radius: 50%;

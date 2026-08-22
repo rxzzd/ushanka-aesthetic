@@ -1,0 +1,54 @@
+@import url('https://googleapis.com');
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+/* Defualt theme */
+:root, html[data-theme="default"] {
+  --bg-color: #130f0d;
+  --card-bg: #301415;
+  --text-color: #e0e0e0;
+  --accent-color: #a04d50;
+}
+
+/* Velvet blood */
+html[data-theme="velvet-blood"] {
+  --bg-color: #0a0908;
+  --card-bg: #49111c;
+  --text-color: #f2f4f3;
+  --accent-color: #9b2235;
+}
+
+/* Sakura goth */
+html[data-theme="sakura-goth"] {
+  --bg-color: #16131f;
+  --card-bg: #4a3f4b;
+  --text-color: #f0d9e4;
+  --accent-color: #c1a0ac;
+}
+
+/*  Kombu forest */
+html[data-theme="kombu-forest"] {
+  --bg-color: #1b1f17;
+  --card-bg: #3a4032;
+  --text-color: #e7eacb;
+  --accent-color: #89a06b;
+}
+
+/* Deep occult */
+html[data-theme="deep-occult"] {
+  --bg-color: #111219;
+  --card-bg: #1e202c;
+  --text-color: #bfc0d1;
+  --accent-color: #60519b;
+}
+
+body {
+  font-family:Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.9s ease, color 0.9s ease; 
+}
+
+
