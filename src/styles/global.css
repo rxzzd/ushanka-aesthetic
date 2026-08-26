@@ -1,23 +1,25 @@
-@import url('https://googleapis.com');
+@import url("https://googleapis.com");
 
 :root {
   interpolate-size: allow-keywords;
 }
 
 /* Defualt theme */
-:root, html[data-theme="default"] {
-  --bg-color: #130f0d;
-  --card-bg: #301415;
-  --text-color: #e0e0e0;
-  --accent-color: #a04d50;
-}
-
-/* Velvet blood */
-html[data-theme="velvet-blood"] {
+:root,
+html[data-theme="default"] {
   --bg-color: #0a0908;
   --card-bg: #49111c;
   --text-color: #f2f4f3;
   --accent-color: #9b2235;
+}
+
+
+/* Azshara Vein */
+html[data-theme='azshara-vein']{
+  --bg-color: #b13e18;
+  --card-bg: #000;
+  --text-color: #ede9d0;
+  --accent-color: #b13e18;
 }
 
 /* Sakura goth */
@@ -44,11 +46,35 @@ html[data-theme="deep-occult"] {
   --accent-color: #60519b;
 }
 
-body {
-  font-family:Arial, Helvetica, sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  transition: background-color 0.9s ease, color 0.9s ease; 
+/* Glacial Salt */
+html[data-theme="glacial-salt"] {
+  --bg-color: #d9d9d8;
+  --card-bg: #7c94b8;
+  --text-color: #0c1a31;
+  --accent-color: #b1bbc8;
 }
 
+/* Blackpink */
+html[data-theme="blackpink"] {
+  --bg-color: #e5a9bf;
+  --card-bg: #fff;
+  --text-color: #241a22;
+  --accent-color: #e5a9bf;
+}
 
+/* Dark Jungle Green */
+html[data-theme="dark-jungle-green"] {
+  --bg-color: #1e201f;
+  --card-bg: #193a31;
+  --text-color: #56ae9c;
+  --accent-color: #56ae9c;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.9s ease,
+    color 0.9s ease;
+}
