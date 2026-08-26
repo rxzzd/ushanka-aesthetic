@@ -4,6 +4,7 @@ import Post from "../components/post/Post.astro";
 import "../styles/global.css";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
+import WelcomePage from "../components/WelcomePage.astro";
 
 const allPosts = await getCollection("posts");
 
@@ -20,6 +21,7 @@ const sortedPosts = allPosts.sort(
   </head>
   <body>
     <ThemeSwitcher />
+    <WelcomePage />
 
     <main class="container">
       <header class="main-header">
