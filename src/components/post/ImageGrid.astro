@@ -130,21 +130,20 @@ const { images, title } = Astro.props;
     opacity: 1;
   }
 
-
-
   @media (max-width: 550px) {
     .image-grid img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    background-color: #2a2a2a;
-  }
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 8px;
+      background-color: #2a2a2a;
+    }
   }
 </style>
 
 <script>
-  const images_grid = document.querySelectorAll<HTMLImageElement>(".image-grid");
+  const images_grid =
+    document.querySelectorAll<HTMLImageElement>(".image-grid");
 
   images_grid.forEach((image_grid) => {
     let touchStartY = 0;
@@ -152,12 +151,14 @@ const { images, title } = Astro.props;
     let isSwiping = false;
 
     const lightbox = image_grid.querySelector<HTMLDialogElement>(".lightbox");
-    const lightboxImg = image_grid.querySelector<HTMLImageElement>(".lightbox-img");
+    const lightboxImg =
+      image_grid.querySelector<HTMLImageElement>(".lightbox-img");
     const closeLightboxButton = image_grid.querySelector<HTMLButtonElement>(
       ".close-lightbox-btn",
     );
 
-    const images = image_grid.querySelectorAll<HTMLImageElement>(".image-grid > img");
+    const images =
+      image_grid.querySelectorAll<HTMLImageElement>(".image-grid > img");
 
     if (lightboxImg && lightbox) {
       images.forEach((img) => {
@@ -168,67 +169,31 @@ const { images, title } = Astro.props;
         });
       });
 
-    closeLightboxButton?.addEventListener("click", () => {
-      lightbox?.close();
-    });
-
-    if (
-      lightboxImg &&
-      lightbox
-    ) {
-   
-
-      lightbox.addEventListener("click", (e) => {
-        const rect = lightbox.getBoundingClientRect();
-
-        const clickedOutside =
-          e.clientX < rect.left ||
-          e.clientX > rect.right ||
-          e.clientY < rect.top ||
-          e.clientY > rect.bottom;
-          
-
-        if (clickedOutside) {
-          lightbox.close();
-        }
-        
-
-lightbox.addEventListener("close", () => {
-        lightboxImg.style.transform = "";
-        lightboxImg.style.transition = "";
-        document.body.style.overflow = "";
+      closeLightboxButton?.addEventListener("click", () => {
+        lightbox?.close();
       });
-    })
 
-    // lightboxImg.addEventListener("touchstart", (e) => {
-      //   touchStartY = e.touches[0].clientY;
-      //   touchDeltaY = 0;
-      //   isSwiping = true;
+      if (lightboxImg && lightbox) {
+        lightbox.addEventListener("click", (e) => {
+          const rect = lightbox.getBoundingClientRect();
 
-      //   lightboxImg.style.transition = "none";
-      // });
+          const clickedOutside =
+            e.clientX < rect.left ||
+            e.clientX > rect.right ||
+            e.clientY < rect.top ||
+            e.clientY > rect.bottom;
 
-      // lightboxImg.addEventListener("touchmove", (e) => {
-      //   if (!isSwiping) return;
+          if (clickedOutside) {
+            lightbox.close();
+          }
 
-      //   const currentY = e.touches[0].clientY;
-      //   touchDeltaY = currentY - touchStartY;
-
-      //   lightboxImg.style.transform = `translateY(${touchDeltaY}px)`;
-      // });
-
-      // lightboxImg.addEventListener("touchend", () => {
-      //   if (!isSwiping) return;
-      //   isSwiping = false;
-
-      //   lightboxImg.style.transition = "transform 0.2s ease-out";
-
-      //   if (Math.abs(touchDeltaY) > 100) {
-      //     lightbox.close();
-      //   } else {
-      //     lightboxImg.style.transform = "translateY(0)";
-      //   }
-      // });
-  }
-}})
+          lightbox.addEventListener("close", () => {
+            lightboxImg.style.transform = "";
+            lightboxImg.style.transition = "";
+            document.body.style.overflow = "";
+          });
+        });
+      }
+    }
+  });
 </script>
