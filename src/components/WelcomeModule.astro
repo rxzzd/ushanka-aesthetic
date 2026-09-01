@@ -12,34 +12,42 @@
       <!-- <p>ushanka-aesthetics.xyz</p> -->
     </header>
     <!-- Main text section -->
-    <!-- TODO: Change main section text placeholder -->
     <section class="welcome-body">
-      <p class="welcome-text">WELCOME TEXT PLACEHOLDER</p>
-
+      <p class="welcome-text">
+        Thank you for visiting! This website is a small hobby project where I archive simple aesthetic images paired with songs I love.       
+      </p>
+      <p class="welcome-text">
+    The site is still in its very early stages, offering just the essentials
+  </p>
       <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
       <!-- Website features -->
-      <!-- TODO: Change features text placeholder -->
       <div class="welcome-features">
-        <p>FEATURES TEXT PLACEHOLDER</p>
-      </div>
+    <p>✦ <b>Music:</b> A basic custom audio player with volume controls.</p>
+    <p>✦ <b>Galleries:</b> Simple photo grids.</p>
+    <p>✦ <b>Color Palettes:</b> A tiny switcher to change the colors of the page.</p>
+  </div>
       <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
       <!-- Footer for links -->
-      <!-- TODO: Change footer placeholder -->
       <footer class="welcome-footer">
-        <div class="social-links">
-        <a class="social-link">
-          <span>GITHUB PLACEHOLDER</span>
+        <p class="welcome-text">
+    I am always open to making this place a little better. If you have any cool ideas or feedback, please let me know on Discord!
+  </p>
+  <p>
+    My Discord: ushanka.angelix
+    </p>
+      <div class="social-links">
+        <a href="https://github.com/rxzzd/ushanka-aesthetic" target="_blank" rel="noopener noreferrer" class="social-link">
+          <span>GitHub</span>
         </a>
-        <a class="social-link">
-          <span>DISCORD PLACEHOLDER</span>
+        <a href="https://t.me/lalunallora" target="_blank" rel="noopener noreferrer" class="social-link">
+          <span>Telegram</span>
         </a>
-        <a class="social-link">
-          <span>TG PLACEHOLDER</span>
-        </a>
-        <a class="social-link">
-          <span>Похуй че еще плейсхолдер</span>
-        </a>
-        </div>
+      </div>
+      <div>
+         <p class="welcome-text"><i>This message will only be shown once. You can access it again by clicking the i icon on the top of the page</i>
+</p>
+      </div>
+
       </footer>
     </section>
   </div>
@@ -205,9 +213,16 @@
     background-color: rgba(255, 255, 255, 0.03);
   }
 
+   ::-webkit-scrollbar {
+    display: none;
+  }
+
 </style>
 
 <script>
+  const openWelcomeBtn = document.querySelector<HTMLButtonElement>("#open-welcome-btn");
+
+
   const welcomeModal =
     document.querySelector<HTMLDialogElement>("#welcome-modal");
   const closeButton =
@@ -223,6 +238,11 @@
 
       localStorage.setItem("welcome-shown", "true");
     }
+
+      openWelcomeBtn?.addEventListener("click", () => {
+    welcomeModal?.showModal();
+    document.body.style.overflow = "hidden";
+  });
 
     closeButton?.addEventListener("click", () => {
       welcomeModal.close();

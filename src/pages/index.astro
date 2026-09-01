@@ -4,7 +4,7 @@ import Post from "../components/post/Post.astro";
 import "../styles/global.css";
 import ThemeSwitcher from "../components/ThemeSwitcher.astro";
 import SpeedInsights from '@vercel/speed-insights/astro';
-import WelcomePage from "../components/WelcomePage.astro";
+import WelcomePage from "../components/WelcomeModule.astro";
 
 const allPosts = await getCollection("posts");
 
@@ -25,7 +25,16 @@ const sortedPosts = allPosts.sort(
 
     <main class="container">
       <header class="main-header">
-        <h1>j'entends ta voix</h1>
+        <div class="title-wrapper">
+    <button id="open-welcome-btn" class="info-btn" aria-label="Open information modal">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    </button>
+    <h1>𓆩༺ 𝔧'𝔢𝔫𝔱𝔢𝔫𝔡𝔰 𝔱𝔞 𝔳𝔬𝔦𝔵 ༻𓆪</h1>
+  </div>
         <h3>˙⋆✮୨ৎ✮⋆˙</h3>
       </header>
 
@@ -73,6 +82,41 @@ const sortedPosts = allPosts.sort(
     letter-spacing: 1px;
   }
 
+  .title-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-btn {
+    position: absolute;
+    right: calc(100% + 10px); /* Выносит кнопку влево от текста */
+    background: none;
+    border: none;
+    color: var(--text-color);
+    opacity: 0.5;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  }
+
+  .info-btn:hover {
+    opacity: 1;
+    color: var(--accent-color);
+    transform: scale(1.1);
+  }
+
+  .main-header h3 {
+    margin: 0;
+    font-weight: normal;
+    color: var(--text-color);
+    opacity: 0.8;
+  }
+
   .main-header p {
     color: #666;
     margin: 0;
@@ -88,6 +132,8 @@ const sortedPosts = allPosts.sort(
   ::-webkit-scrollbar {
     display: none;
   }
+
+  
 </style>
 
 <script is:inline>
