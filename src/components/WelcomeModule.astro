@@ -1,0 +1,255 @@
+---
+
+---
+
+<dialog id="welcome-modal" class="welcome-dialog">
+  <div class="welcome-content">
+    <!-- Header + close button -->
+    <button class="close-welcome-btn" aria-label="Close welcome button">X</button>
+    <header class="welcome-header">
+      <span class="welcome-icon">⋆.˚ ☾⭒.˚✦꒰ა໒꒱✦⋆.˚ ☾⭒.˚</span>
+      <h2>꧁⎝ 𓆩༺ 𝔧'𝔢𝔫𝔱𝔢𝔫𝔡𝔰 𝔱𝔞 𝔳𝔬𝔦𝔵 ༻𓆪 ⎠꧂</h2>
+      <!-- <p>ushanka-aesthetics.xyz</p> -->
+    </header>
+    <!-- Main text section -->
+    <section class="welcome-body">
+      <p class="welcome-text">
+        Thank you for visiting! This website is a small hobby project where I archive simple aesthetic images paired with songs I love.       
+      </p>
+      <p class="welcome-text">
+    The site is still in its very early stages, offering just the essentials
+  </p>
+      <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
+      <!-- Website features -->
+      <div class="welcome-features">
+    <p>✦ <b>Music:</b> A basic custom audio player with volume controls.</p>
+    <p>✦ <b>Galleries:</b> Simple photo grids.</p>
+    <p>✦ <b>Color Palettes:</b> A tiny switcher to change the colors of the page.</p>
+  </div>
+      <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
+      <!-- Footer for links -->
+      <footer class="welcome-footer">
+        <p class="welcome-text">
+    I am always open to making this place a little better. If you have any cool ideas or feedback, please let me know on Discord!
+  </p>
+  <p>
+    My Discord: ushanka.angelix
+    </p>
+      <div class="social-links">
+        <a href="https://github.com/rxzzd/ushanka-aesthetic" target="_blank" rel="noopener noreferrer" class="social-link">
+          <span>GitHub</span>
+        </a>
+        <a href="https://t.me/lalunallora" target="_blank" rel="noopener noreferrer" class="social-link">
+          <span>Telegram</span>
+        </a>
+      </div>
+      <div>
+         <p class="welcome-text"><i>This message will only be shown once. You can access it again by clicking the i icon on the top of the page</i>
+</p>
+      </div>
+
+      </footer>
+    </section>
+  </div>
+</dialog>
+
+<style>
+  /* Dialogue */
+  .welcome-dialog {
+    background: transparent;
+    border: none;
+    padding: 0;
+    outline: none;
+    margin: auto;
+    max-width: 550px;
+    width: 90%;
+    opacity: 0;
+    transform: scale(0.95);
+    transition:
+      opacity 0.3s ease-out,
+      transform 0.3s ease-out,
+      display 0.3s allow-discrete;
+  }
+
+  .welcome-dialog[open] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  @starting-style {
+    .welcome-dialog[open] {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  /* Background */
+
+  .welcome-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition:
+      background-color 0.3s ease-out,
+      backdrop-filter 0.3s ease-out,
+      display 0.3s allow-discrete;
+  }
+
+  .welcome-dialog[open]::backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Content */
+
+  .welcome-content {
+    position: relative;
+    background-color: var(--bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 20px;
+    padding: 34px 30px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    color: var(--text-color);
+    box-sizing: border-box;
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  /* Close button */
+
+  .close-welcome-btn {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.6;
+    transition: 
+        opacity: 0.15s ease,
+        transform 0.1s ease;
+  }
+
+  .close-welcome-btn:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* Header */
+  .welcome-header h2 {
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin: 8px 0 2px 0;
+    letter-spacing: 1px;
+  }
+
+  .welcome-icon {
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: var(--accent-color);
+    transition: color 0.4s ease;
+  }
+
+  /* Body */
+  .welcome-body {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 18px 0;
+  }
+
+  .welcome-divider {
+    font-size: 0.8rem;
+    margin: 14px 0;
+    user-select: none;
+  }
+
+  /* Features */
+
+  .welcome-features {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 10px;
+  }
+
+  .welcome-features p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+    color: var(--text-color);
+    opacity: 0.85;
+  }
+
+  /* Footer */
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .social-link {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 6px 10px;
+    border-radius: 15px;
+    transition: 
+        background-color 0.2s ease,
+        border-color: 0.2s ease,
+        color 0.2s ease;
+  }
+
+  .social-link:hover {
+    border-color: var(--accent-color);
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+   ::-webkit-scrollbar {
+    display: none;
+  }
+
+</style>
+
+<script>
+  const openWelcomeBtn = document.querySelector<HTMLButtonElement>("#open-welcome-btn");
+
+
+  const welcomeModal =
+    document.querySelector<HTMLDialogElement>("#welcome-modal");
+  const closeButton =
+    document.querySelector<HTMLButtonElement>(".close-welcome-btn");
+
+  if (welcomeModal) {
+    const welcomeShown = localStorage.getItem("welcome-shown");
+
+    if (!welcomeShown) {
+      welcomeModal.showModal();
+
+      document.body.style.overflow = "hidden";
+
+      localStorage.setItem("welcome-shown", "true");
+    }
+
+      openWelcomeBtn?.addEventListener("click", () => {
+    welcomeModal?.showModal();
+    document.body.style.overflow = "hidden";
+  });
+
+    closeButton?.addEventListener("click", () => {
+      welcomeModal.close();
+    });
+
+    welcomeModal.addEventListener("close", () => {
+      document.body.style.overflow = "";
+    });
+  }
+</script>
