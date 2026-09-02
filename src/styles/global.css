@@ -1,4 +1,7 @@
 @import url("https://googleapis.com");
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
 :root {
   interpolate-size: allow-keywords;
