@@ -12,44 +12,43 @@
       <!-- <p>ushanka-aesthetics.xyz</p> -->
     </header>
     <!-- Main text section -->
+    <!-- Main text section -->
     <section class="welcome-body">
       <p class="welcome-text">
         Thank you for visiting! This website is a small hobby project where I archive simple aesthetic images paired with songs I love.       
       </p>
       <p class="welcome-text">
-    The site is still in its very early stages, offering just the essentials
-  </p>
+        The site is still in its very early stages, offering just the essentials.
+      </p>
       <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
+      
       <!-- Website features -->
       <div class="welcome-features">
-    <p>✦ <b>Music:</b> A basic custom audio player with volume controls.</p>
-    <p>✦ <b>Galleries:</b> Simple photo grids.</p>
-    <p>✦ <b>Color Palettes:</b> A tiny switcher to change the colors of the page.</p>
-  </div>
+        <p>✦ <b>Music:</b> A basic custom audio player with volume controls.</p>
+        <p>✦ <b>Galleries:</b> Simple photo grids.</p>
+        <p>✦ <b>Color Palettes:</b> A tiny switcher to change the colors of the page.</p>
+      </div>
       <div class="welcome-divider">─── 𓆩 ♱ 𓆪 ───</div>
-      <!-- Footer for links -->
-      <footer class="welcome-footer">
-        <p class="welcome-text">
-    I am always open to making this place a little better. If you have any cool ideas or feedback, please let me know on Discord!
-  </p>
-  <p>
-    My Discord: ushanka.angelix
-    </p>
+    </section>
+
+    <!-- Footer for links (вынесен на один уровень с section) -->
+    <footer class="welcome-footer">
+      <p class="welcome-text">
+        I am always open to making this place a little better. If you have any cool ideas or feedback, please let me know on Discord!
+      </p>
+      <p>My Discord: ushanka.angelix</p>
       <div class="social-links">
         <a href="https://github.com/rxzzd/ushanka-aesthetic" target="_blank" rel="noopener noreferrer" class="social-link">
           <span>GitHub</span>
         </a>
-        <a href="https://t.me/lalunallora" target="_blank" rel="noopener noreferrer" class="social-link">
-          <span>Telegram</span>
+        <a href="https://discord.com/users/1259576340584206362" target="_blank" rel="noopener noreferrer" class="social-link">
+          <span>Discord</span>
         </a>
       </div>
       <div>
-         <p class="welcome-text"><i>This message will only be shown once. You can access it again by clicking the i icon on the top of the page</i>
-</p>
+        <p class="welcome-text"><i>This message will only be shown once. You can access it again by clicking the i icon on the top of the page</i></p>
       </div>
-
-      </footer>
-    </section>
+    </footer>
   </div>
 </dialog>
 
@@ -64,22 +63,18 @@
     max-width: 550px;
     width: 90%;
     opacity: 0;
-    transform: scale(0.95);
     transition:
-      opacity 0.3s ease-out,
-      transform 0.3s ease-out,
-      display 0.3s allow-discrete;
+      opacity 0.25s ease-out,
+      display 0.25s allow-discrete;
   }
 
   .welcome-dialog[open] {
     opacity: 1;
-    transform: scale(1);
   }
 
   @starting-style {
     .welcome-dialog[open] {
       opacity: 0;
-      transform: scale(0.95);
     }
   }
 
@@ -111,9 +106,21 @@
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     color: var(--text-color);
     box-sizing: border-box;
+    transform: scale(0.95);
     transition:
+      transform 0.25s ease-out,
       background-color 0.4s ease,
       color 0.4s ease;
+  }
+
+  .welcome-dialog[open] .welcome-content {
+    transform: scale(1);
+  }
+
+  @starting-style {
+    .welcome-dialog[open] .welcome-content {
+      transform: scale(0.95);
+    }
   }
 
   /* Close button */
@@ -141,7 +148,7 @@
 
   /* Header */
   .welcome-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 300;
     margin: 8px 0 2px 0;
     letter-spacing: 1px;
@@ -163,6 +170,14 @@
     margin: 18px 0;
   }
 
+  .welcome-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-color);
+    opacity: 0.9;
+    margin: 18px 0;
+  }
+
   .welcome-divider {
     font-size: 0.8rem;
     margin: 14px 0;
@@ -172,7 +187,7 @@
   /* Features */
 
   .welcome-features {
-    text-align: left;
+    text-align: center;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -194,7 +209,7 @@
     gap: 16px;
   }
 
-  .social-link {
+    .social-link {
     font-size: 0.85rem;
     color: var(--text-color);
     text-decoration: none;
@@ -202,9 +217,9 @@
     padding: 6px 10px;
     border-radius: 15px;
     transition: 
-        background-color 0.2s ease,
-        border-color: 0.2s ease,
-        color 0.2s ease;
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
   }
 
   .social-link:hover {
@@ -217,35 +232,115 @@
     display: none;
   }
 
+  @media (max-width: 600px) {
+    /* 1. Использование dvh предотвращает обрезку окна адресной строкой мобильного браузера */
+    .welcome-dialog {
+      width: clamp(92%, 94vw, 96%);
+      max-height: 85dvh;
+    }
+
+    .welcome-content {
+      padding: clamp(20px, 5vw, 26px) clamp(12px, 4vw, 18px);
+      max-height: 85dvh;
+      overflow-y: auto;
+      border-radius: 16px;
+    }
+
+    /* 2. Увеличенная зона нажатия для пальца на мобильных */
+    .close-welcome-btn {
+      top: 10px;
+      right: 12px;
+      font-size: 1.1rem;
+      min-width: 32px;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 3. Шапка */
+    .welcome-icon {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    .welcome-header h2 {
+      font-size: clamp(1.05rem, 4vw, 1.25rem);
+      letter-spacing: 0.5px;
+    }
+
+    /* 4. Текст и разделители */
+    .welcome-body,
+    .welcome-text {
+      font-size: clamp(0.78rem, 2.6vw, 0.85rem);
+      line-height: 1.4;
+      margin: 8px 0;
+    }
+
+    .welcome-divider {
+      font-size: 0.75rem;
+      margin: 8px 0;
+    }
+
+    /* 5. Список возможностей */
+    .welcome-features {
+      padding: 0 4px;
+      gap: 6px;
+      text-align: center;
+    }
+
+    .welcome-features p {
+      font-size: clamp(0.72rem, 2.4vw, 0.78rem);
+      line-height: 1.35;
+    }
+
+    /* 6. Кнопки соцсетей */
+    .social-links {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .social-link {
+      font-size: clamp(0.72rem, 2.4vw, 0.78rem);
+      padding: 5px 10px;
+    }
+  }
+
 </style>
 
 <script>
   const openWelcomeBtn = document.querySelector<HTMLButtonElement>("#open-welcome-btn");
-
-
-  const welcomeModal =
-    document.querySelector<HTMLDialogElement>("#welcome-modal");
-  const closeButton =
-    document.querySelector<HTMLButtonElement>(".close-welcome-btn");
+  const welcomeModal = document.querySelector<HTMLDialogElement>("#welcome-modal");
+  const closeButton = document.querySelector<HTMLButtonElement>(".close-welcome-btn");
 
   if (welcomeModal) {
     const welcomeShown = localStorage.getItem("welcome-shown");
 
     if (!welcomeShown) {
       welcomeModal.showModal();
-
       document.body.style.overflow = "hidden";
-
       localStorage.setItem("welcome-shown", "true");
     }
 
-      openWelcomeBtn?.addEventListener("click", () => {
-    welcomeModal?.showModal();
-    document.body.style.overflow = "hidden";
-  });
+    openWelcomeBtn?.addEventListener("click", () => {
+      welcomeModal.showModal();
+      document.body.style.overflow = "hidden";
+    });
 
     closeButton?.addEventListener("click", () => {
       welcomeModal.close();
+    });
+
+    welcomeModal.addEventListener("click", (e) => {
+      const rect = welcomeModal.getBoundingClientRect();
+      const clickedOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top ||
+        e.clientY > rect.bottom;
+
+      if (clickedOutside) {
+        welcomeModal.close();
+      }
     });
 
     welcomeModal.addEventListener("close", () => {

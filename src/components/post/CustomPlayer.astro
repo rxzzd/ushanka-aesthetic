@@ -354,7 +354,52 @@ const { audioSrc, metadata } = Astro.props;
     border-radius: 50%;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
+    .custom-player {
+      padding: clamp(8px, 2.5vw, 12px) clamp(10px, 3vw, 16px);
+      gap: clamp(8px, 2.5vw, 14px);
+      border-radius: 14px;
+      min-width: 0; /* Снимает ограничение сжатия флексбокса */
+    }
+
+    .player-left {
+      flex-shrink: 0;
+    }
+
+    .cover-wrapper {
+      width: clamp(32px, 8.5vw, 38px);
+      height: clamp(32px, 8.5vw, 38px);
+    }
+
+    .icon {
+      width: clamp(14px, 4vw, 18px);
+      height: clamp(16px, 5vw, 22px);
+    }
+
+    .player-right {
+      min-width: 0; /* Не дает длинным названиям треков выталкивать границы экрана */
+      gap: 3px;
+    }
+
+    .song-meta {
+      font-size: clamp(0.75rem, 2.6vw, 0.85rem);
+      margin-left: 0;
+    }
+
+    .player-controls {
+      gap: clamp(4px, 1.5vw, 6px);
+    }
+
+    .time-display {
+      font-size: clamp(0.68rem, 2.2vw, 0.75rem);
+      min-width: 26px;
+    }
+
+    .volume-icon {
+      width: 16px;
+      height: 16px;
+    }
+
     .volume-container {
       position: relative;
     }

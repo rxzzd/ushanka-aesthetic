@@ -134,7 +134,28 @@ const sortedPosts = allPosts.sort(
     display: none;
   }
 
-  
+  @media (max-width: 600px) {
+    .container {
+      padding: clamp(20px, 5vw, 40px) clamp(8px, 3vw, 16px);
+    }
+
+    .main-header {
+      margin-bottom: clamp(20px, 5vw, 40px);
+    }
+
+    .main-header h1 {
+      font-size: clamp(1.15rem, 5.5vw, 2rem);
+      letter-spacing: 0;
+    }
+
+    .main-header h3 {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    .title-wrapper {
+      gap: 6px;
+    }
+  }
 </style>
 
 <script is:inline>
