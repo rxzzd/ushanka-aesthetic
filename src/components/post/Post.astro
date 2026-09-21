@@ -31,17 +31,17 @@ const { title, date, images, audioSrc, metadata } = Astro.props;
       background-color 0.4s ease,
       color 0.4s ease;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 30px;
+    padding: clamp(10px, 3.5vw, 20px);
+    margin-bottom: clamp(16px, 4vw, 30px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     max-width: 600px;
-    width: 80%;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
     .post-card {
-      max-width: 90%;
-      width: 90%;
+      border-radius: 8px;
     }
   }
 </style>

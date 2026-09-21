@@ -130,13 +130,18 @@ const { images, title } = Astro.props;
     opacity: 1;
   }
 
-  @media (max-width: 550px) {
-    .image-grid img {
+  @media (max-width: 600px) {
+    .image-grid {
+      gap: clamp(6px, 2vw, 10px);
+      margin-bottom: clamp(10px, 3vw, 14px);
+    }
+
+    .image-grid > img {
       width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: 8px;
-      background-color: #2a2a2a;
+      height: auto;
+      min-height: 200px;
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
     }
   }
 </style>
